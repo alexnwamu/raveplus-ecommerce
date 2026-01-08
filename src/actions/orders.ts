@@ -5,9 +5,6 @@ import { Order, OrderItem } from "@/types";
 import { revalidatePath } from "next/cache";
 import { generateOrderNumber } from "@/lib/utils";
 
-// ============================================================================
-// Order Actions
-// ============================================================================
 
 export async function getOrders(options?: {
   userId?: string;
@@ -125,10 +122,8 @@ export async function createOrder(
 ): Promise<{ data: Order | null; error: string | null }> {
   const supabase = await createServiceClient();
 
-  // Generate order number
   const orderNumber = generateOrderNumber();
 
-  // Create order
   const { data: order, error: orderError } = await supabase
     .from("orders")
     .insert({
@@ -149,7 +144,6 @@ export async function createOrder(
     return { data: null, error: orderError.message };
   }
 
-  // Create order items
   const orderItems = input.items.map((item) => ({
     order_id: order.id,
     product_id: item.productId,
@@ -165,12 +159,10 @@ export async function createOrder(
 
   if (itemsError) {
     console.error("Error creating order items:", itemsError);
-    // Rollback order
     await supabase.from("orders").delete().eq("id", order.id);
     return { data: null, error: itemsError.message };
   }
 
-  // Update product stock
   for (const item of input.items) {
     if (item.variantId) {
       await supabase.rpc("decrement_variant_stock", {
@@ -245,9 +237,6 @@ export async function updatePaymentStatus(
   return { data, error: null };
 }
 
-// ============================================================================
-// Admin Analytics
-// ============================================================================
 
 export async function getAdminStats(): Promise<{
   totalRevenue: number;

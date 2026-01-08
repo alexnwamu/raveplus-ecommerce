@@ -5,9 +5,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
-// ============================================================================
-// Sign Up
-// ============================================================================
 
 export async function signUp(
   email: string,
@@ -34,10 +31,6 @@ export async function signUp(
   return { error: null };
 }
 
-// ============================================================================
-// Sign In
-// ============================================================================
-
 export async function signIn(
   email: string,
   password: string
@@ -57,9 +50,24 @@ export async function signIn(
   return { error: null };
 }
 
-// ============================================================================
-// Sign Out
-// ============================================================================
+export async function signInWithGoogle(
+  redirectTo?: string
+): Promise<{ url: string | null; error: string | null }> {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?redirect=${redirectTo || "/"}`,
+    },
+  });
+
+  if (error) {
+    return { url: null, error: error.message };
+  }
+
+  return { url: data.url, error: null };
+}
 
 export async function signOut(): Promise<void> {
   const supabase = await createClient();
@@ -67,10 +75,6 @@ export async function signOut(): Promise<void> {
   revalidatePath("/", "layout");
   redirect("/");
 }
-
-// ============================================================================
-// Reset Password
-// ============================================================================
 
 export async function resetPassword(
   email: string
@@ -88,10 +92,6 @@ export async function resetPassword(
   return { error: null };
 }
 
-// ============================================================================
-// Update Password
-// ============================================================================
-
 export async function updatePassword(
   newPassword: string
 ): Promise<{ error: string | null }> {
@@ -107,10 +107,6 @@ export async function updatePassword(
 
   return { error: null };
 }
-
-// ============================================================================
-// Get Current User
-// ============================================================================
 
 export async function getCurrentUser() {
   const supabase = await createClient();
@@ -135,10 +131,6 @@ export async function getCurrentUser() {
     profile,
   };
 }
-
-// ============================================================================
-// Update Profile
-// ============================================================================
 
 export async function updateProfile(
   updates: {

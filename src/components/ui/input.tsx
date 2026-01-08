@@ -52,7 +52,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               "focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20",
               "disabled:cursor-not-allowed disabled:bg-input disabled:opacity-50",
               error && "border-error focus:border-error focus:ring-error/20",
-              leftIcon && "pl-10",
+              leftIcon && "pl-11",
               rightIcon && "pr-10",
               className
             )}

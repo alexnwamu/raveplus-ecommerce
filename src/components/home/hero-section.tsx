@@ -120,22 +120,6 @@ export function HeroSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/20 to-transparent" />
               </div>
 
-              {/* Floating Card */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-                className="absolute -bottom-6 -left-6 md:-left-12 bg-white rounded-2xl shadow-xl p-4 max-w-[200px]"
-              >
-                <p className="text-xs text-muted mb-1">Trending Now</p>
-                <p className="font-medium text-brand-dark text-sm">Premium Coats & Jackets</p>
-                <Link
-                  href="/products?category=jackets-coats"
-                  className="inline-flex items-center gap-1 text-sm text-brand-primary mt-2 hover:underline"
-                >
-                  Shop Now <ArrowRight className="h-3 w-3" />
-                </Link>
-              </motion.div>
             </div>
           </motion.div>
         </div>
