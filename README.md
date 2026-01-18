@@ -2,7 +2,7 @@
 
 A production-ready Nigerian women's fashion e-commerce platform built with Next.js 14, Supabase, Tailwind CSS, and Paystack.
 
-![RavePlus Homepage](docs/homepage.png)
+
 
 ## Features
 
